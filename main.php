@@ -37,7 +37,7 @@ else
 
 function get_coordinates($address)
 {
-    $address = urlencode($city.','.$street.','.$province);
+    // $address = urlencode($city.','.$street.','.$province);
     $url = "http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false&region=Moroco";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -48,7 +48,7 @@ function get_coordinates($address)
     $response = curl_exec($ch);
     curl_close($ch);
     $response_a = json_decode($response);
-    $status = $response_a->status;
+    $status = $response_a['status'];
 
     if ( $status == 'ZERO_RESULTS' )
     {
@@ -56,8 +56,9 @@ function get_coordinates($address)
     }
     else
     {
-        $return = array('lat' => $response_a->results[0]->geometry->location->lat, 'long' => $long = $response_a->results[0]->geometry->location->lng);
-        return $return;
+    	var_dump($response_a);exit;
+        // $return = array('lat' => $response_a->results[0]->geometry->location->lat, 'long' => $long = $response_a->results[0]->geometry->location->lng);
+        return FALSE;
     }
 }
 
